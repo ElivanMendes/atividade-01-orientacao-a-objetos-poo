@@ -106,7 +106,7 @@ def menu_secundario(conta):
                     print('\n\tNumero da Conta Invalido!')
             else:
                 print('\n\tNão Existe Contas para Transferir!')
-                
+
         elif op == 3:
 
             print()
@@ -133,8 +133,8 @@ def menu(numcontas):
             print('\n\tSAINDO...')
         elif op == 1:
 
-            titular = input('\n\tDigite seu Nome: ')
-            saldo = float(input('\tDigite seu Saldo: '))
+            titular = input('\n\tDigite o Nome do Titular: ')
+            saldo = float(input('\tDigite o Saldo Inicial: '))
             numcontas += 1
             contas_bancarias.append(nova_conta(numcontas, titular, saldo))
             print('\n\tConta Cadastrada com Sucesso!')
