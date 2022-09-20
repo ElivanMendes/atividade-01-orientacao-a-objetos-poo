@@ -66,11 +66,10 @@ def depositar(conta, valor):
     conta['saldo'] += valor
 
 
-# Função para Ler e Valida Opção do Usuario #
-def ler_opcao():
-    op = input('\n\tDigite a Opção: ')
-    if op.isdigit():
-        return int(op)
+# Função para Valida um Valor Repassado #
+def validar_valor(valor):
+    if valor.isdigit():
+        return int(valor)
     else:
         return None
 
@@ -80,8 +79,8 @@ def menu_secundario(conta):
     op = None
     while op != 0:
         menu_secundario_info()
-        op = ler_opcao()
-        
+        op = validar_valor(input('\n\tDigite a Opção: '))
+
         if op == 0:
             print('\n\tVOLTANDO...')
         elif op == 1:
@@ -93,17 +92,21 @@ def menu_secundario(conta):
         elif op == 2:
 
             if len(contas_bancarias) >= 2:
-                numero = int(input('\n\tDigite o Numero da Conta a Transferir: '))
-                conta_dep = buscar_conta(numero)
+                numero = validar_valor(input('\n\tDigite o Numero da Conta a Transferir: '))
 
-                if conta_dep is not None:
-                    valor = float(input('\tDigite o Valor a Transferir: '))
-                    transferir_valor(conta, conta_dep, valor)
+                if numero is not None:
+                    conta_dep = buscar_conta(numero)
+
+                    if conta_dep is not None:
+                        valor = float(input('\tDigite o Valor a Transferir: '))
+                        transferir_valor(conta, conta_dep, valor)
+                    else:
+                        print('\n\tConta Não Encontrada!')
                 else:
-                    print('\n\tConta Não Encontrada!')
+                    print('\n\tNumero da Conta Invalido!')
             else:
                 print('\n\tNão Existe Contas para Transferir!')
-
+                
         elif op == 3:
 
             print()
@@ -124,7 +127,7 @@ def menu(numcontas):
     op = None
     while op != 0:
         menu_principal_info()
-        op = ler_opcao()
+        op = validar_valor(input('\n\tDigite a Opção: '))
 
         if op == 0:
             print('\n\tSAINDO...')
@@ -139,15 +142,19 @@ def menu(numcontas):
         elif op == 2:
 
             if contas_bancarias:
-                numero = int(input('\n\tDigite o Numero da Conta: '))
-                conta = buscar_conta(numero)
+                numero = validar_valor(input('\n\tDigite o Numero da Conta: '))
 
-                if conta is not None:
-                    print()
-                    imprimir_conta(conta)
-                    menu_secundario(conta)
+                if numero is not None:
+                    conta = buscar_conta(numero)
+
+                    if conta is not None:
+                        print()
+                        imprimir_conta(conta)
+                        menu_secundario(conta)
+                    else:
+                        print('\n\tConta Não Encontrada!')
                 else:
-                    print('\n\tConta Não Encontrada!')
+                    print('\n\tNumero da Conta Invalido!')
             else:
                 print('\n\tNão há Contas Cadastradas!')
 
