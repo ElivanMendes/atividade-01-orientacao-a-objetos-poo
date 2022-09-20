@@ -66,13 +66,22 @@ def depositar(conta, valor):
     conta['saldo'] += valor
 
 
+# Função para Ler e Valida Opção do Usuario #
+def ler_opcao():
+    op = input('\n\tDigite a Opção: ')
+    if op.isdigit():
+        return int(op)
+    else:
+        return None
+
+
 # Menu Secundario #
 def menu_secundario(conta):
     op = None
     while op != 0:
         menu_secundario_info()
-        op = int(input('\n\tDigite a Opção: '))
-
+        op = ler_opcao()
+        
         if op == 0:
             print('\n\tVOLTANDO...')
         elif op == 1:
@@ -94,7 +103,7 @@ def menu_secundario(conta):
                     print('\n\tConta Não Encontrada!')
             else:
                 print('\n\tNão Existe Contas para Transferir!')
-                
+
         elif op == 3:
 
             print()
@@ -115,7 +124,7 @@ def menu(numcontas):
     op = None
     while op != 0:
         menu_principal_info()
-        op = int(input('\n\tDigite a Opção: '))
+        op = ler_opcao()
 
         if op == 0:
             print('\n\tSAINDO...')
