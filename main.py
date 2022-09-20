@@ -85,12 +85,16 @@ def menu_secundario(conta):
 
             if len(contas_bancarias) >= 2:
                 numero = int(input('\n\tDigite o Numero da Conta a Transferir: '))
-                valor = float(input('\tDigite o Valor a Transferir: '))
                 conta_dep = buscar_conta(numero)
-                transferir_valor(conta, conta_dep, valor)
+
+                if conta_dep is not None:
+                    valor = float(input('\tDigite o Valor a Transferir: '))
+                    transferir_valor(conta, conta_dep, valor)
+                else:
+                    print('\n\tConta Não Encontrada!')
             else:
                 print('\n\tNão Existe Contas para Transferir!')
-
+                
         elif op == 3:
 
             print()
