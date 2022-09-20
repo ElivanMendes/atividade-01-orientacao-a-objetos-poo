@@ -74,6 +74,17 @@ def validar_valor(valor):
         return None
 
 
+# Função que Ler e Verifica se o Valor da Tranferencia é Maior que 0 #
+def ler_valor_transf():
+    valor = 0
+    while valor <= 0:
+        valor = float(input('\n\tInforme o Valor a Transferir: '))
+        if valor <= 0:
+            print('\n\tInforme um Valor maior que R$ 0.00 para Transferir!')
+    else:
+        return valor
+
+
 # Menu Secundario #
 def menu_secundario(conta):
     op = None
@@ -100,7 +111,7 @@ def menu_secundario(conta):
                         conta_dep = buscar_conta(numero)
 
                         if conta_dep is not None:
-                            valor = float(input('\tDigite o Valor a Transferir: '))
+                            valor = ler_valor_transf()
                             transferir_valor(conta, conta_dep, valor)
                         else:
                             print('\n\tConta Não Encontrada!')
