@@ -64,6 +64,7 @@ def transferir_valor(conta_saq, conta_dep, valor):
 # Função para Depositar Valor #
 def depositar(conta, valor):
     conta['saldo'] += valor
+    print('\n\tValor Depositado com Sucesso!')
 
 
 # Função para Valida um Valor Repassado #
@@ -81,6 +82,17 @@ def ler_valor_transf():
         valor = float(input('\n\tInforme o Valor a Transferir: '))
         if valor <= 0:
             print('\n\tInforme um Valor maior que R$ 0.00 para Transferir!')
+    else:
+        return valor
+
+
+# Função quer ler e Verifica se o Valor do Deposito é Maior que 0 #
+def ler_valor_deposito():
+    valor = 0
+    while valor <= 0:
+        valor = float(input('\n\tInforme o Valor a ser Depositado: '))
+        if valor <= 0:
+            print('\n\tInforme um Valor maior que R$ 0.00 para Depositar!')
     else:
         return valor
 
@@ -129,10 +141,9 @@ def menu_secundario(conta):
 
         elif op == 4:
 
-            valor = float(input('\n\tInforme o Valor a ser Depositado: '))
+            valor = ler_valor_deposito()
             depositar(conta, valor)
-            print('\n\tValor Depositado com Sucesso!')
-
+            
         else:
             print('\n\tOpção Invalida!')
 
