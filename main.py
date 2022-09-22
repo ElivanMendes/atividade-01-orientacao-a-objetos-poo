@@ -1,4 +1,7 @@
-# Opções do Menu Principal #
+import re
+
+
+# Opções do Menu Principal. #
 def menu_principal_info():
     print('\n\t##########################################################', end='')
     print('\n\t===================== BANCO DE TODOS =====================')
@@ -9,19 +12,19 @@ def menu_principal_info():
     print('\t##########################################################')
 
 
-# Opções Menu Secundario #
+# Opções Menu Secundario. #
 def menu_secundario_info():
     print('\n\t1 - Remover\n\t2 - Realizar Transferencia')
     print('\t3 - Exibir Saldo\n\t4 - Depositar\n\t0 - Sair')
 
 
-# Lista das Contas #
+# Lista das Contas. #
 contas_bancarias = []
-# Contador dos Numeros das Contas #
+# Contador dos Numeros das Contas. #
 num_contas = 0
 
 
-# Função Criar uma Nova Conta #
+# Função Criar uma Nova Conta. #
 def nova_conta(numero, titular, saldo):
     conta = {'numero': numero,
              'titular': titular,
@@ -29,14 +32,14 @@ def nova_conta(numero, titular, saldo):
     return conta
 
 
-# Função para Econtrar uma Conta #
+# Função para Econtrar uma Conta. #
 def buscar_conta(numero):
     for conta in contas_bancarias:
         if conta['numero'] == numero:
             return conta
 
 
-# Função para Imprimir uma Conta #
+# Função para Imprimir uma Conta. #
 def imprimir_conta(conta):
     print('\t-----------------------------------')
     print('\tNumero: {}'.format(conta['numero']))
@@ -45,13 +48,13 @@ def imprimir_conta(conta):
     print('\t-----------------------------------')
 
 
-# Função para Imprimir a lista de Contas #
+# Função para Imprimir a lista de Contas. #
 def imprimir_contas(contas):
     for conta in contas:
         imprimir_conta(conta)
 
 
-# Função para Realizar transferençias #
+# Função para Realizar transferençias. #
 def transferir_valor(conta_saq, conta_dep, valor):
     if conta_saq['saldo'] >= valor:
         conta_saq['saldo'] -= valor
@@ -61,13 +64,13 @@ def transferir_valor(conta_saq, conta_dep, valor):
         print('\n\tSaldo Insuficiente!')
 
 
-# Função para Depositar Valor #
+# Função para Depositar Valor. #
 def depositar(conta, valor):
     conta['saldo'] += valor
     print('\n\tValor Depositado com Sucesso!')
 
 
-# Função para Valida um Valor Repassado #
+# Função para Valida um Valor Repassado. #
 def validar_valor(valor):
     if valor.isdigit():
         return int(valor)
@@ -75,40 +78,59 @@ def validar_valor(valor):
         return None
 
 
-# Função que ler e Verifica se o Valor do Deposito Inicial é Positivo #
+# Checa se uma String pode ser Convertida para Float. #
+def is_float(valor):
+    if isinstance(valor, float): return True
+    if re.search(r'^\-{,1}[0-9]+\.{1}[0-9]+$', valor): return True
+    return False
+
+
+# Checa se uma String pode ser Convertida para Int. #
+def is_int(valor):
+    if isinstance(valor, int): return True
+    if re.search(r'^\-{,1}[0-9]+$', valor): return True
+    return False
+
+
+# Checa se uma String pode ser Convertida para Number. #
+def is_number(valor):
+    return is_int(valor) or is_float(valor)
+
+
+# Função que Verifica se o Valor do Input pode ser Convertido para Float. #
+def validar_input(info):
+    valor = ''
+    while not is_number(valor):
+        valor = input(info)
+        if not is_number(valor):
+            print('\n\tInforme um Valor Valido!\n')
+    else:
+        return float(valor)
+
+
+# Função que ler e Verifica se o Valor do Deposito Inicial é Positivo. #
 def ler_valor_deposito_inicial():
     valor = -1
     while valor < 0:
-        valor = float(input('\tInforme o Valor do Depositado Inicial: '))
+        valor = validar_input('\tInforme o Valor do Depositado Inicial: ')
         if valor < 0:
             print('\n\tInforme um Valor Maior ou Igual a R$ 0.00 para Deposito Inicial!\n')
     else:
         return valor
 
 
-# Função que Ler e Verifica se o Valor da Tranferencia é Maior que 0 #
-def ler_valor_transferencia():
+# Função que ler e Verifica se o Valor é Maior que 0. #
+def ler_valor(info):
     valor = 0
     while valor <= 0:
-        valor = float(input('\n\tInforme o Valor a Transferir: '))
+        valor = validar_input(info)
         if valor <= 0:
-            print('\n\tInforme um Valor maior que R$ 0.00 para Transferir!')
+            print('\n\tInforme um Valor Maior que R$ 0.00!')
     else:
         return valor
 
 
-# Função que ler e Verifica se o Valor do Deposito é Maior que 0 #
-def ler_valor_deposito():
-    valor = 0
-    while valor <= 0:
-        valor = float(input('\n\tInforme o Valor a ser Depositado: '))
-        if valor <= 0:
-            print('\n\tInforme um Valor maior que R$ 0.00 para Depositar!')
-    else:
-        return valor
-
-
-# Menu Secundario #
+# Menu Secundario. #
 def menu_secundario(conta):
     op = None
     while op != 0:
@@ -136,7 +158,7 @@ def menu_secundario(conta):
                             conta_dep = buscar_conta(numero)
 
                             if conta_dep is not None:
-                                valor = ler_valor_transferencia()
+                                valor = ler_valor('\n\tInforme o Valor a Transferir: ')
                                 transferir_valor(conta, conta_dep, valor)
                             else:
                                 print('\n\tConta Não Encontrada!')
@@ -156,7 +178,7 @@ def menu_secundario(conta):
 
         elif op == 4:
 
-            valor = ler_valor_deposito()
+            valor = ler_valor('\n\tInforme o Valor a ser Depositado: ')
             depositar(conta, valor)
 
         else:
