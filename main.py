@@ -75,8 +75,19 @@ def validar_valor(valor):
         return None
 
 
+# Função que ler e Verifica se o Valor do Deposito Inicial é Positivo #
+def ler_valor_deposito_inicial():
+    valor = -1
+    while valor < 0:
+        valor = float(input('\tInforme o Valor do Depositado Inicial: '))
+        if valor < 0:
+            print('\n\tInforme um Valor Maior ou Igual a R$ 0.00 para Deposito Inicial!\n')
+    else:
+        return valor
+
+
 # Função que Ler e Verifica se o Valor da Tranferencia é Maior que 0 #
-def ler_valor_transf():
+def ler_valor_transferencia():
     valor = 0
     while valor <= 0:
         valor = float(input('\n\tInforme o Valor a Transferir: '))
@@ -125,7 +136,7 @@ def menu_secundario(conta):
                             conta_dep = buscar_conta(numero)
 
                             if conta_dep is not None:
-                                valor = ler_valor_transf()
+                                valor = ler_valor_transferencia()
                                 transferir_valor(conta, conta_dep, valor)
                             else:
                                 print('\n\tConta Não Encontrada!')
@@ -137,7 +148,7 @@ def menu_secundario(conta):
                     print('\n\tNão Existe Contas para Transferir!')
             else:
                 print('\n\tVoce Não Possui Saldo para Transferir!')
-                
+
         elif op == 3:
 
             print()
@@ -164,7 +175,7 @@ def menu(numcontas):
         elif op == 1:
 
             titular = input('\n\tDigite o Nome do Titular: ')
-            saldo = float(input('\tDigite o Saldo Inicial: '))
+            saldo = ler_valor_deposito_inicial()
             numcontas += 1
             contas_bancarias.append(nova_conta(numcontas, titular, saldo))
             print('\n\tConta Cadastrada com Sucesso!')
