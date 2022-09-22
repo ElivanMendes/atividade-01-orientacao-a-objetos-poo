@@ -86,7 +86,7 @@ def ler_valor_transf():
         return valor
 
 
-# Função quer ler e Verifica se o Valor do Deposito é Maior que 0 #
+# Função que ler e Verifica se o Valor do Deposito é Maior que 0 #
 def ler_valor_deposito():
     valor = 0
     while valor <= 0:
@@ -114,26 +114,30 @@ def menu_secundario(conta):
 
         elif op == 2:
 
-            if len(contas_bancarias) >= 2:
-                numero = validar_valor(input('\n\tDigite o Numero da Conta a Transferir: '))
+            if conta['saldo'] > 0:
 
-                if not numero == conta['numero']:
+                if len(contas_bancarias) >= 2:
+                    numero = validar_valor(input('\n\tDigite o Numero da Conta a Transferir: '))
 
-                    if numero is not None:
-                        conta_dep = buscar_conta(numero)
+                    if not numero == conta['numero']:
 
-                        if conta_dep is not None:
-                            valor = ler_valor_transf()
-                            transferir_valor(conta, conta_dep, valor)
+                        if numero is not None:
+                            conta_dep = buscar_conta(numero)
+
+                            if conta_dep is not None:
+                                valor = ler_valor_transf()
+                                transferir_valor(conta, conta_dep, valor)
+                            else:
+                                print('\n\tConta Não Encontrada!')
                         else:
-                            print('\n\tConta Não Encontrada!')
+                            print('\n\tNumero da Conta Invalido!')
                     else:
-                        print('\n\tNumero da Conta Invalido!')
+                        print('\n\tVoce Não pode fazer Transferencia para sua propria Conta!')
                 else:
-                    print('\n\tVoce Não pode fazer Transferencia para sua propria Conta!')
+                    print('\n\tNão Existe Contas para Transferir!')
             else:
-                print('\n\tNão Existe Contas para Transferir!')
-
+                print('\n\tVoce Não Possui Saldo para Transferir!')
+                
         elif op == 3:
 
             print()
@@ -143,7 +147,7 @@ def menu_secundario(conta):
 
             valor = ler_valor_deposito()
             depositar(conta, valor)
-            
+
         else:
             print('\n\tOpção Invalida!')
 
