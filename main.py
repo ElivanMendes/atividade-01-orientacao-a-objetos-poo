@@ -20,11 +20,11 @@ def menu_secundario_info():
 
 # Lista das Contas. #
 contas_bancarias = []
-# Contador dos Numeros das Contas. #
+# Contador dos Números das Contas. #
 num_contas = 0
 
 
-# Função Criar uma Nova Conta. #
+# Função para Cria uma Nova Conta. #
 def nova_conta(numero, titular, saldo):
     conta = {'numero': numero,
              'titular': titular,
@@ -97,7 +97,7 @@ def is_number(valor):
     return is_int(valor) or is_float(valor)
 
 
-# Função que Verifica se o Valor do Input pode ser Convertido para Float. #
+# Função que Verifica se o Valor da Entrada pode ser Convertido para Float. #
 def validar_input(info):
     valor = ''
     while not is_number(valor):
@@ -108,7 +108,7 @@ def validar_input(info):
         return float(valor)
 
 
-# Função que ler e Verifica se o Valor do Deposito Inicial é Positivo. #
+# Função que ler e Verifica se o Valor do Depósito Inicial é Positivo. #
 def ler_valor_deposito_inicial():
     valor = -1
     while valor < 0:
